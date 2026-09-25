@@ -1,0 +1,43 @@
+// Prisma schema for DevChange AI
+// See: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id           String     @id @default(cuid())
+  name         String     @db.VarChar(120)
+  description  String     @db.Text
+  // Optional structured context fields — all omitted from prompts when empty
+  modules      String?    @db.Text
+  dbTables     String?    @db.Text
+  apiEndpoints String?    @db.Text
+  techStack    String?    @db.Text
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  analyses     Analysis[]
+
+  @@map("projects")
+}
+
+model Analysis {
+  id            String   @id @default(cuid())
+  projectId     String
+  changeRequest String   @db.Text
+  // Parsed 7-section output stored as JSON
+  result        Json
+  // Raw LLM response — preserved for copy-to-markdown and debugging
+  rawMarkdown   String   @db.Text
+  createdAt     DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@map("analyses")
+}
