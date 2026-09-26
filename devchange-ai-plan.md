@@ -578,7 +578,7 @@ Returns the `AnalysisResult` object. Falls back to storing the full response in 
 
 ---
 
-### Sub-Task 2 — AI Pipeline (watsonx + Prompt + Parser) [ ] pending
+### Sub-Task 2 — AI Pipeline (watsonx + Prompt + Parser) [x] complete
 
 **Intent:** Build the complete intelligence layer: the provider-abstracted AI client targeting IBM watsonx.ai via plain fetch-based SSE, the hybrid prompt builder, the streaming API route, and the section parser. This is the core differentiator.
 

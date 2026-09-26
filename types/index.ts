@@ -5,15 +5,18 @@
 /**
  * The seven structured sections produced by the AI analysis.
  * Each value is a markdown string ready for rendering.
+ *
+ * Section names match the exact headings required in lib/prompt.ts
+ * and parsed by lib/parser.ts.
  */
 export interface AnalysisResult {
+  changeSummary: string;
   affectedModules: string;
-  databaseChanges: string;
-  backendAPIChanges: string;
-  frontendUIChanges: string;
-  dependenciesRisks: string;
-  developmentTasks: string;
-  testCases: string;
+  databaseImpact: string;
+  backendApiImpact: string;
+  frontendUiImpact: string;
+  developmentTasks: string; // markdown checklist items
+  testCasesAndRisks: string; // markdown checklist items
 }
 
 /**
