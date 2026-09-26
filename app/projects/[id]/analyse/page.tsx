@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { AnalysisForm } from "@/components/AnalysisForm";
 
 export const dynamic = "force-dynamic";
 
@@ -20,16 +21,10 @@ export async function generateMetadata({
   return { title: `Analyse — ${project.name}` };
 }
 
-/**
- * app/projects/[id]/analyse/page.tsx
- *
- * Placeholder page for Sub-Task 4 (Analysis Flow UI).
- * Confirms the route exists and the "Analyse a Change" button works.
- */
 export default async function AnalysePage({ params }: AnalysePageProps) {
   const project = await prisma.project.findUnique({
     where: { id: params.id },
-    select: { id: true, name: true },
+    select: { id: true, name: true, description: true },
   });
 
   if (!project) {
@@ -38,7 +33,7 @@ export default async function AnalysePage({ params }: AnalysePageProps) {
 
   return (
     <div className="mx-auto max-w-2xl space-y-8">
-      {/* Breadcrumb */}
+      {/* ── Breadcrumb ── */}
       <nav aria-label="Breadcrumb">
         <ol className="flex items-center gap-1.5 text-sm text-gray-500">
           <li>
@@ -60,36 +55,40 @@ export default async function AnalysePage({ params }: AnalysePageProps) {
         </ol>
       </nav>
 
-      {/* Coming soon placeholder */}
-      <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-8 py-16 text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-          <svg
-            className="h-6 w-6 text-blue-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-            aria-hidden
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-            />
-          </svg>
-        </div>
-        <p className="text-base font-semibold text-gray-800">
-          Analysis UI coming in Sub-Task 4
+      {/* ── Page header ── */}
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900">Analyse a Change</h1>
+        <p className="mt-1.5 text-sm text-gray-500 leading-relaxed">
+          Describe the change you want to make to{" "}
+          <span className="font-medium text-gray-700">{project.name}</span>.
+          DevChange AI will analyse the impact across modules, database, API,
+          and frontend.
         </p>
-        <p className="mt-2 text-sm text-gray-500 max-w-sm mx-auto">
-          The AI pipeline is ready. The streaming UI will be built next.
-        </p>
-        <Link
-          href={`/projects/${project.id}`}
-          className="mt-6 inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-        >
-          ← Back to Project
-        </Link>
+      </div>
+
+      {/* ── Form card ── */}
+      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <AnalysisForm
+          projectId={project.id}
+          projectName={project.name}
+        />
+      </div>
+
+      {/* ── Tips ── */}
+      <div className="rounded-lg border border-gray-200 bg-gray-50 px-5 py-4">
+        <p className="text-xs font-semibold text-gray-600 mb-2">Tips for better analysis</p>
+        <ul className="space-y-1.5">
+          {[
+            "Be specific — mention module names, table names, or endpoints if you know them.",
+            "Include business context — why is this change needed?",
+            'Mention constraints — e.g. "must be backward-compatible" or "zero downtime".',
+          ].map((tip) => (
+            <li key={tip} className="flex items-start gap-2 text-xs text-gray-500">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" aria-hidden />
+              {tip}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

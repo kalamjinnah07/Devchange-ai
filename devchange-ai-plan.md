@@ -630,7 +630,7 @@ Returns the `AnalysisResult` object. Falls back to storing the full response in 
 
 ---
 
-### Sub-Task 4 — Analysis Flow UI [ ] pending
+### Sub-Task 4 — Analysis Flow UI [x] complete
 
 **Intent:** Build the change-request form with live streaming output, and the saved analysis report with 7 accordion sections. This is the centrepiece of the demo.
 
