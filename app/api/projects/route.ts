@@ -1,12 +1,17 @@
 /**
  * app/api/projects/route.ts
  *
+ * GET  /api/projects — List all projects (with analysis count).
  * POST /api/projects — Create a new project.
  *
- * Request body:
+ * GET responses:
+ *   200  { projects: ProjectWithCount[] }
+ *   500  { error: string }
+ *
+ * POST request body:
  *   { name, description, modules?, dbTables?, apiEndpoints?, techStack? }
  *
- * Responses:
+ * POST responses:
  *   201  { project }
  *   400  { error: string }
  *   500  { error: string }
@@ -15,6 +20,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
+
+// ── GET /api/projects ─────────────────────────────────────────────────────────
+
+export async function GET() {
+  try {
+    const projects = await prisma.project.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        _count: { select: { analyses: true } },
+      },
+    });
+    return NextResponse.json({ projects });
+  } catch (err) {
+    console.error("[GET /api/projects] Database error:", err);
+    return NextResponse.json(
+      { error: "Failed to load projects." },
+      { status: 500 }
+    );
+  }
+}
 
 // ── Validation schema ─────────────────────────────────────────────────────────
 

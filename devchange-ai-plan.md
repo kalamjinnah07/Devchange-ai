@@ -609,7 +609,7 @@ Returns the `AnalysisResult` object. Falls back to storing the full response in 
 
 ---
 
-### Sub-Task 3 — Project Management UI [ ] pending
+### Sub-Task 3 — Project Management UI [x] complete
 
 **Intent:** Build the project list, create-project form, and project dashboard so users can manage projects and navigate to analysis history. The create form must implement the hybrid context input (required freetext + optional structured fields in an expander).
 
