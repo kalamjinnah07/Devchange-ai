@@ -14,6 +14,9 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
+    "@google/genai": "^2.24.0",
+    "@neon/config": "^1.8.2",
+    "@neon/env": "^1.4.7",
     "@prisma/client": "^5.22.0",
     "next": "14.2.18",
     "react": "^18.3.1",

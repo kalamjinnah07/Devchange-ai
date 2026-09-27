@@ -12,7 +12,7 @@ build/
 tsconfig.tsbuildinfo
 *.tsbuildinfo
 
-# --- Environment files — never commit secrets ---------------------------------
+# --- Environment files ï¿½ never commit secrets ---------------------------------
 .env
 .env.local
 .env.development.local
@@ -21,7 +21,7 @@ tsconfig.tsbuildinfo
 
 # --- Prisma -------------------------------------------------------------------
 # Keep prisma/schema.prisma and prisma/migrations/ in source control.
-# The generated client lives in node_modules — do not commit it.
+# The generated client lives in node_modules ï¿½ do not commit it.
 prisma/*.db
 prisma/*.db-journal
 
@@ -44,3 +44,4 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+.neon
